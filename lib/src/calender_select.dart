@@ -83,7 +83,7 @@ class _CalenderSelectState extends State<CalenderSelect> {
         endDateTime: widget.endDateTime,
         contentPadding: widget.contentPadding,
         calendarUtils: widget.calendarUtils,
-        builderItem: (info, child, month) => _builderItem(context, info, child, month),
+        builderItem: (info, child, month) => _builderItem(context, info, child!, month),
         showOtherDay: widget.showOtherDay,
         showLunary: widget.showLunary,
       ),

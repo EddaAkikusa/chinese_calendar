@@ -543,7 +543,6 @@ class CalendarUtils {
     int y = dateTime.year;
     int m = dateTime.month;
     int d = dateTime.day;
-    isLeapMonth ??= false;
     var leapMonth = this.leapMonth(y);
     if (isLeapMonth && (leapMonth != m)) {
       return null;

@@ -80,7 +80,7 @@ class _BasePageState extends State<BasePage> {
             ),
           ),
           Text(""),
-          Text("${_clickInfo?.solarDate?.toString()?.substring(0, 10)}"),
+          Text("${_clickInfo?.solarDate?.toString().substring(0, 10)}"),
           Text("${_clickInfo?.lunarYearName}年${_clickInfo?.lunarMonthName}${_clickInfo?.lunarDayName}"),
           Text("${_clickInfo?.animal}"),
           Text("${_clickInfo?.astro}"),
@@ -92,7 +92,7 @@ class _BasePageState extends State<BasePage> {
     );
   }
 
-  Widget _builderItem(CalendarInfo info, Widget child, int month) {
+  Widget _builderItem(CalendarInfo info, Widget? child, int month) {
     if (null != _clickInfo && 0 == CalendarUtils.compareDate(_clickInfo!.solarDate, info.solarDate)) {
       child = DecoratedBox(
         decoration: BoxDecoration(
@@ -143,8 +143,8 @@ class _SelelctDatePageState extends State<SelelctDatePage> {
             ),
           ),
           Text(""),
-          Text("开始 ${_start?.toString()?.substring(0, 10)}"),
-          Text("结束 ${_end?.toString()?.substring(0, 10)}"),
+          Text("开始 ${_start?.toString().substring(0, 10)}"),
+          Text("结束 ${_end?.toString().substring(0, 10)}"),
         ],
       ),
     );

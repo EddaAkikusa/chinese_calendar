@@ -24,7 +24,7 @@ class CalendarView extends StatefulWidget {
   final EdgeInsetsGeometry contentPadding;
   final CalendarUtils? calendarUtils;
 
-  final Widget Function(CalendarInfo info, Widget child, int month)? builderItem;
+  final Widget Function(CalendarInfo info, Widget? child, int month)? builderItem;
   final Widget Function(DateTime? dateTime)? onChange;
 
   ///显示非当前月的天
@@ -71,7 +71,7 @@ class _CalendarViewState extends State<CalendarView> {
   void initState() {
     super.initState();
     _calendarUtils = widget.calendarUtils ?? CalendarUtils();
-    dateTime = widget.initDateTime ?? DateTime.now();
+    dateTime = widget.initDateTime;
     _startDateTime = widget.startDateTime ?? DateTime(1900);
     _endDateTime = widget.endDateTime ?? DateTime(2100);
     _controller = PageController(initialPage: (_dateTime!.year - _startDateTime.year) * 12 + _dateTime!.month - (_startDateTime.month - 1));
