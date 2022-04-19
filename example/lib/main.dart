@@ -1,4 +1,5 @@
 import 'package:chinese_calendar/chinese_calendar.dart';
+import 'package:chinese_calendar/chinese_calendar.dart' as cal;
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -48,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ListTile(
             title: Text("选择日期对话框"),
             onTap: () {
-              showDateRangePicker(context: context, initDateTime: DateTime.now());
+              cal.showDateRangePicker(context: context, initDateTime: DateTime.now());
             },
           ),
         ],
@@ -63,7 +64,7 @@ class BasePage extends StatefulWidget {
 }
 
 class _BasePageState extends State<BasePage> {
-  CalendarInfo _clickInfo;
+  CalendarInfo? _clickInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +93,7 @@ class _BasePageState extends State<BasePage> {
   }
 
   Widget _builderItem(CalendarInfo info, Widget child, int month) {
-    if (null != _clickInfo && 0 == CalendarUtils.compareDate(_clickInfo.solarDate, info.solarDate)) {
+    if (null != _clickInfo && 0 == CalendarUtils.compareDate(_clickInfo!.solarDate, info.solarDate)) {
       child = DecoratedBox(
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).accentColor),
@@ -118,8 +119,8 @@ class SelelctDatePage extends StatefulWidget {
 }
 
 class _SelelctDatePageState extends State<SelelctDatePage> {
-  DateTime _start;
-  DateTime _end;
+  DateTime? _start;
+  DateTime? _end;
 
   @override
   Widget build(BuildContext context) {

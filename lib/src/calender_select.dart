@@ -13,30 +13,30 @@ class CalenderSelect extends StatefulWidget {
   final DateTime initDateTime;
 
   ///开始时间
-  final DateTime startDateTime;
+  final DateTime? startDateTime;
 
   ///结束时间
-  final DateTime endDateTime;
+  final DateTime? endDateTime;
 
   final EdgeInsetsGeometry contentPadding;
-  final CalendarUtils calendarUtils;
-  final void Function(DateTime start, DateTime end) onSelect;
+  final CalendarUtils? calendarUtils;
+  final void Function(DateTime? start, DateTime? end)? onSelect;
 
   ///是否选择范围
   final bool isRange;
 
   ///显示非当前月的天
-  final bool showOtherDay;
+  final bool? showOtherDay;
 
   ///选择非当前月的天
-  final bool selectOtherDay;
+  final bool? selectOtherDay;
 
   ///显示农历
-  final bool showLunary;
+  final bool? showLunary;
 
   CalenderSelect({
-    Key key,
-    this.initDateTime,
+    Key? key,
+    required this.initDateTime,
     this.contentPadding = const EdgeInsets.only(),
     this.startDateTime,
     this.endDateTime,
@@ -55,19 +55,19 @@ class CalenderSelect extends StatefulWidget {
 
 class _CalenderSelectState extends State<CalenderSelect> {
   final Radius _radius = Radius.circular(50);
-  TextStyle _dayStyle;
-  TextStyle _garyStyle;
-  TextStyle _lunarDayStyle;
-  DateTime _start;
-  DateTime _end;
-  Color _selectColor;
-  Color _selectTextColor;
-  bool _lunary;
-  bool _selectOtherDay;
+  late TextStyle _dayStyle;
+  late TextStyle _garyStyle;
+  late TextStyle _lunarDayStyle;
+  DateTime? _start;
+  DateTime? _end;
+  late Color _selectColor;
+  Color? _selectTextColor;
+  late bool _lunary;
+  late bool _selectOtherDay;
 
   @override
   Widget build(BuildContext context) {
-    CalenderThemeData theme = CalenderTheme.of(context);
+    CalenderThemeData? theme = CalenderTheme.of(context);
     _dayStyle = theme?.dayStyle ?? TextStyle(color: Color(0xff000000));
     _garyStyle = theme?.garyStyle ?? TextStyle(color: Color(0xffcccccc));
     _lunarDayStyle = theme?.lunarDayStyle ?? TextStyle(color: Color(0xffcccccc), fontSize: 10);
@@ -91,8 +91,8 @@ class _CalenderSelectState extends State<CalenderSelect> {
   }
 
   Widget _builderItem(BuildContext context, CalendarInfo info, Widget child, int month) {
-    int start = CalendarUtils.compareDate(info.solarDate, _start);
-    int end = CalendarUtils.compareDate(info.solarDate, _end);
+    int? start = CalendarUtils.compareDate(info.solarDate, _start);
+    int? end = CalendarUtils.compareDate(info.solarDate, _end);
     if (0 == start && null == end) {
       child = DecoratedBox(
         decoration: BoxDecoration(
@@ -125,7 +125,7 @@ class _CalenderSelectState extends State<CalenderSelect> {
         ),
         child: _buildSelectChild(context, info, month),
       );
-    } else if (1 == start && -1 == end && (month == info.solarDate.month || _selectOtherDay)) {
+    } else if (1 == start && -1 == end && (month == info.solarDate!.month || _selectOtherDay)) {
       child = DecoratedBox(
         decoration: BoxDecoration(
           color: _selectColor.withOpacity(0.2),
@@ -134,7 +134,7 @@ class _CalenderSelectState extends State<CalenderSelect> {
       );
     }
 
-    return month == info.solarDate.month || _selectOtherDay
+    return month == info.solarDate!.month || _selectOtherDay
         ? InkWell(
             child: child,
             onTap: () {
@@ -146,7 +146,7 @@ class _CalenderSelectState extends State<CalenderSelect> {
                 if (null == _start || true != widget.isRange) {
                   _start = info.solarDate;
                 } else {
-                  int temp = CalendarUtils.compareDate(info.solarDate, _start);
+                  int? temp = CalendarUtils.compareDate(info.solarDate, _start);
                   if (0 == temp) {
                     return;
                   }
@@ -158,7 +158,7 @@ class _CalenderSelectState extends State<CalenderSelect> {
                   }
                 }
                 if (null != widget.onSelect) {
-                  widget.onSelect(_start, _end);
+                  widget.onSelect!(_start, _end);
                 }
               });
             },
@@ -171,13 +171,13 @@ class _CalenderSelectState extends State<CalenderSelect> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          info.solarDate.day.toString().padLeft(2, "0"),
+          info.solarDate!.day.toString().padLeft(2, "0"),
           style: month == month ? _dayStyle.copyWith(color: _selectTextColor) : _garyStyle.copyWith(color: _selectTextColor),
         ),
       ]..addAll(_lunary
           ? [
               Text(
-                info.lunarFestival ?? info.festival ?? info.term ?? info.lunarDayName,
+                info.lunarFestival ?? info.festival ?? info.term ?? info.lunarDayName!,
                 style: _lunarDayStyle.copyWith(color: _selectTextColor),
                 overflow: TextOverflow.clip,
               )
@@ -187,30 +187,30 @@ class _CalenderSelectState extends State<CalenderSelect> {
   }
 }
 
-Future<List<DateTime>> showDateRangePicker({
-  BuildContext context,
+Future<List<DateTime>?> showDateRangePicker({
+  required BuildContext context,
 
   ///是否选择范围
   bool isRange = true,
 
   ///初妈时间
-  DateTime initDateTime,
+  required DateTime initDateTime,
 
   ///开始时间
-  DateTime startDateTime,
+  DateTime? startDateTime,
 
   ///结束时间
-  DateTime endDateTime,
-  CalendarUtils calendarUtils,
+  DateTime? endDateTime,
+  CalendarUtils? calendarUtils,
 
   ///显示非当前月的天
-  bool showOtherDay,
+  bool? showOtherDay,
 
   ///选择非当前月的天
-  bool selectOtherDay,
+  bool? selectOtherDay,
 
   ///显示农历
-  bool showLunary,
+  bool? showLunary,
 }) {
   assert(null != context);
   assert(null != initDateTime);

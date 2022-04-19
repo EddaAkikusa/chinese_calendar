@@ -340,7 +340,7 @@ class CalendarUtils {
   }
 
   /// 返回农历y年闰月的天数 若该年没有闰月则返回0
-  int leapDays(int year, [int month]) {
+  int leapDays(int year, [int? month]) {
     if (0 != leapMonth(year)) {
       return (0 != (_lunarInfo[year - 1900] & 0x10000) ? 30 : 29);
     }
@@ -348,11 +348,11 @@ class CalendarUtils {
   }
 
   /// 返回农历y年m月（非闰月）的总天数，计算m为闰月时的天数请使用leapDays方法
-  int monthDays(int year, int month) {
+  int monthDays(int? year, int month) {
     if (month > 12 || month < 1) {
       return -1;
     }
-    return (0 != (_lunarInfo[year - 1900] & (0x10000 >> month)) ? 30 : 29);
+    return (0 != (_lunarInfo[year! - 1900] & (0x10000 >> month)) ? 30 : 29);
   }
 
   /// 返回公历(!)y年m月的天数
@@ -435,7 +435,7 @@ class CalendarUtils {
   }
 
   /// 传入农历数字月份返回汉语通俗表示法
-  String toChinaMonth(int month) {
+  String? toChinaMonth(int month) {
     if (month > 12 || month < 1) {
       return null;
     }
@@ -473,9 +473,9 @@ class CalendarUtils {
 
   /// 传入阳历年月日获得详细的公历、农历object信息
   /// 参数区间1900.1.31~2100.12.31
-  DateTime solar2lunar(DateTime solarDate) {
+  DateTime? solar2lunar(DateTime solarDate) {
     int year = solarDate.year;
-    int month = solarDate.month;
+    int? month = solarDate.month;
     int day = solarDate.day;
     //年份限定、上限
     if (year < 1900 || year > 2100) {
@@ -487,14 +487,14 @@ class CalendarUtils {
     }
 
     int offset = solarDate.difference(DateTime(1900, 1, 31)).inDays;
-    int i, temp;
+    int? i, temp;
 
-    for (i = 1900; i < 2101 && offset > 0; i++) {
+    for (i = 1900; i! < 2101 && offset > 0; i++) {
       temp = this.lYearDays(i);
       offset -= temp;
     }
     if (offset < 0) {
-      offset += temp;
+      offset += temp!;
       i--;
     }
 
@@ -503,7 +503,7 @@ class CalendarUtils {
     var isLeap = false;
 
     //效验闰月
-    for (i = 1; i < 13 && offset > 0; i++) {
+    for (i = 1; i! < 13 && offset > 0; i++) {
       //闰月
       if (leap > 0 && i == (leap + 1) && isLeap == false) {
         --i;
@@ -529,7 +529,7 @@ class CalendarUtils {
       }
     }
     if (offset < 0) {
-      offset += temp;
+      offset += temp!;
       --i;
     }
     month = i;
@@ -539,7 +539,7 @@ class CalendarUtils {
 
   /// 传入农历年月日以及传入的月份是否闰月获得详细的公历、农历object信息 <=>JSON
   /// 参数区间1900.1.31~2100.12.1
-  DateTime lunar2solar(DateTime dateTime, bool isLeapMonth) {
+  DateTime? lunar2solar(DateTime dateTime, bool isLeapMonth) {
     int y = dateTime.year;
     int m = dateTime.month;
     int d = dateTime.day;
@@ -591,7 +591,7 @@ class CalendarUtils {
   }
 
   CalendarInfo getInfo(DateTime solarDate) {
-    var lunarDate = solar2lunar(solarDate);
+    var lunarDate = solar2lunar(solarDate)!;
 
     String gzYear = this.toGanZhiYear(solarDate.year);
     var firstNode = this.getTerm(solarDate.year, (solarDate.month * 2 - 1)); //返回当月「节」为几日开始
@@ -633,7 +633,7 @@ class CalendarUtils {
     );
   }
 
-  static int compareDate(DateTime date1, DateTime date2) {
+  static int? compareDate(DateTime? date1, DateTime? date2) {
     if (null == date1 || null == date2) {
       return null;
     }
@@ -656,26 +656,26 @@ class CalendarUtils {
 
 class CalendarInfo {
   ///农历日期
-  final DateTime lunarDate;
+  final DateTime? lunarDate;
 
   ///公历日期
-  final DateTime solarDate;
+  final DateTime? solarDate;
 
-  final String lunarYearName;
-  final String lunarMonthName;
-  final String lunarDayName;
+  final String? lunarYearName;
+  final String? lunarMonthName;
+  final String? lunarDayName;
 
   //生肖
-  final String animal;
+  final String? animal;
 
   //星座
-  final String astro;
-  final String gzYear;
-  final String gzMonth;
-  final String gzDay;
-  final String term;
-  final String festival;
-  final String lunarFestival;
+  final String? astro;
+  final String? gzYear;
+  final String? gzMonth;
+  final String? gzDay;
+  final String? term;
+  final String? festival;
+  final String? lunarFestival;
 
   CalendarInfo({
     this.lunarDate,
