@@ -77,6 +77,7 @@ class _CalenderSelectState extends State<CalenderSelect> {
     _selectOtherDay = widget.selectOtherDay ?? theme?.selectOtherDay ?? false;
 
     return Material(
+      color: const Color(0xFFF5F5F5),
       child: CalendarView(
         initDateTime: widget.initDateTime,
         startDateTime: widget.startDateTime,
