@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text("选择日期范围"),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return SelelctDatePage();
+                return SelectDatePage();
               }));
             },
           ),
@@ -64,7 +64,7 @@ class BasePage extends StatefulWidget {
 }
 
 class _BasePageState extends State<BasePage> {
-  CalendarInfo? _clickInfo;
+  CalendarInfo _clickInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class _BasePageState extends State<BasePage> {
             ),
           ),
           Text(""),
-          Text("${_clickInfo?.solarDate?.toString().substring(0, 10)}"),
+          Text("${_clickInfo?.solarDate?.toString()?.substring(0, 10)}"),
           Text("${_clickInfo?.lunarYearName}年${_clickInfo?.lunarMonthName}${_clickInfo?.lunarDayName}"),
           Text("${_clickInfo?.animal}"),
           Text("${_clickInfo?.astro}"),
@@ -92,11 +92,11 @@ class _BasePageState extends State<BasePage> {
     );
   }
 
-  Widget _builderItem(CalendarInfo info, Widget? child, int month) {
-    if (null != _clickInfo && 0 == CalendarUtils.compareDate(_clickInfo!.solarDate, info.solarDate)) {
+  Widget _builderItem(CalendarInfo info, Widget child, int month) {
+    if (null != _clickInfo && 0 == CalendarUtils.compareDate(_clickInfo.solarDate, info.solarDate)) {
       child = DecoratedBox(
         decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).accentColor),
+          border: Border.all(color: Theme.of(context).colorScheme.secondary),
         ),
         child: child,
       );
@@ -113,14 +113,14 @@ class _BasePageState extends State<BasePage> {
   }
 }
 
-class SelelctDatePage extends StatefulWidget {
+class SelectDatePage extends StatefulWidget {
   @override
-  _SelelctDatePageState createState() => _SelelctDatePageState();
+  _SelectDatePageState createState() => _SelectDatePageState();
 }
 
-class _SelelctDatePageState extends State<SelelctDatePage> {
-  DateTime? _start;
-  DateTime? _end;
+class _SelectDatePageState extends State<SelectDatePage> {
+  DateTime _start;
+  DateTime _end;
 
   @override
   Widget build(BuildContext context) {
@@ -143,8 +143,8 @@ class _SelelctDatePageState extends State<SelelctDatePage> {
             ),
           ),
           Text(""),
-          Text("开始 ${_start?.toString().substring(0, 10)}"),
-          Text("结束 ${_end?.toString().substring(0, 10)}"),
+          Text("开始 ${_start?.toString()?.substring(0, 10)}"),
+          Text("结束 ${_end?.toString()?.substring(0, 10)}"),
         ],
       ),
     );

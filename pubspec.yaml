@@ -1,6 +1,6 @@
 name: chinese_calendar
 description: 带有农历的日历
-version: 0.0.2
+version: 0.0.2+1
 homepage: https://github.com/wskfjtheqian/chinese_calendar
 
 environment:

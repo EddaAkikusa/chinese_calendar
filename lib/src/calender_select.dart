@@ -46,8 +46,7 @@ class CalenderSelect extends StatefulWidget {
     this.showOtherDay,
     this.showLunary,
     this.selectOtherDay,
-  })  : assert(null != initDateTime),
-        super(key: key);
+  })  : super(key: key);
 
   @override
   _CalenderSelectState createState() => _CalenderSelectState();
@@ -213,8 +212,6 @@ Future<List<DateTime>?> showDateRangePicker({
   ///显示农历
   bool? showLunary,
 }) {
-  assert(null != context);
-  assert(null != initDateTime);
   return showDialog(
     context: context,
     builder: (context) {
@@ -257,15 +254,15 @@ Future<List<DateTime>?> showDateRangePicker({
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            FlatButton(
+                            TextButton(
                               child: Text("取消"),
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
                             ),
                             SizedBox(width: 12),
-                            RaisedButton(
-                              color: Theme.of(context).primaryColor,
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
                               child: Text(
                                 "确定",
                                 style: TextStyle(color: Colors.white),
